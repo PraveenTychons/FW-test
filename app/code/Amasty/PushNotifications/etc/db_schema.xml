@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @author Amasty Team
+* @copyright Copyright (c) 2022 Amasty (https://www.amasty.com)
+* @package Push Notifications for Magento 2
+*/-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="amasty_notifications_campaign" resource="default" engine="innodb" comment="Amasty Push Notifications Campaign table">
+    <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Campaign Id"/>
+    <column xsi:type="timestamp" name="scheduled" on_update="false" nullable="true" comment="Scheduled"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Campaign Store"/>
+    <column xsi:type="varchar" name="name" nullable="true" length="255" comment="Name"/>
+    <column xsi:type="boolean" name="is_active" nullable="false" default="false" comment="Is Active"/>
+    <column xsi:type="smallint" name="status" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Status"/>
+    <column xsi:type="varchar" name="logo_path" nullable="true" length="255" comment="Logo Path"/>
+    <column xsi:type="boolean" name="is_default_logo" nullable="false" default="false" comment="Is Default Logo"/>
+    <column xsi:type="varchar" name="message_title" nullable="true" length="255" comment="Message Title"/>
+    <column xsi:type="text" name="message_body" nullable="true" comment="Message Body"/>
+    <column xsi:type="boolean" name="button_notification_enable" nullable="false" default="false" comment="Button Notification Enable"/>
+    <column xsi:type="varchar" name="button_notification_text" nullable="true" length="255" comment="Button Notification Text"/>
+    <column xsi:type="varchar" name="button_notification_url" nullable="true" length="255" comment="Button Notification URL"/>
+    <column xsi:type="text" name="utm_params" nullable="true" comment="UTM Parameters"/>
+    <column xsi:type="int" name="sent" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Total Sent Notifications"/>
+    <column xsi:type="int" name="shown" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Total Shown Notifications"/>
+    <column xsi:type="int" name="clicked" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Total Clicked Notifications"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+    <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+    <column xsi:type="boolean" name="segmentation_source" nullable="false" default="false" comment="Segmentation Source Column"/>
+    <column xsi:type="int" name="shown_unique" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Total Shown Unique Notifications"/>
+    <column xsi:type="text" name="notification_type" nullable="true" comment="Notification Type"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="campaign_id"/>
+    </constraint>
+  </table>
+  <table name="amasty_notifications_subscriber" resource="default" engine="innodb" comment="Amasty Push Notifications Subscriber table">
+    <column xsi:type="int" name="subscriber_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Subscriber Id"/>
+    <column xsi:type="varchar" name="source" nullable="true" length="255" comment="Source"/>
+    <column xsi:type="boolean" name="is_active" nullable="false" default="false" comment="Is Active"/>
+    <column xsi:type="varchar" name="subscriber_ip" nullable="true" length="255" comment="Subscribers IP"/>
+    <column xsi:type="varchar" name="token" nullable="true" length="255" comment="Token"/>
+    <column xsi:type="varchar" name="location" nullable="true" length="255" comment="Location"/>
+    <column xsi:type="int" name="customer_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Customer ID"/>
+    <column xsi:type="bigint" name="visitor_id" padding="20" unsigned="false" nullable="true" identity="false" comment="Customer ID"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+    <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="subscriber_id"/>
+    </constraint>
+  </table>
+  <table name="amasty_notifications_campaign_store" resource="default" engine="innodb" comment="Campaign Store">
+    <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="Campaign store ID"/>
+    <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Campaign Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_57B87DAD09737820DB07A466DE49306E" table="amasty_notifications_campaign_store" column="campaign_id" referenceTable="amasty_notifications_campaign" referenceColumn="campaign_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="AMASTY_NOTIFICATIONS_CAMPAIGN_STORE_STORE_ID_STORE_STORE_ID" table="amasty_notifications_campaign_store" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+    <index referenceId="AMASTY_NOTIFICATIONS_CAMPAIGN_STORE_CAMPAIGN_ID" indexType="btree">
+      <column name="campaign_id"/>
+    </index>
+  </table>
+  <table name="amasty_notifications_campaign_group" resource="default" engine="innodb" comment="Amasty Push Notifications Campaign Customer Groups Table">
+    <column xsi:type="int" name="campaign_group_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+    <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Campaign ID"/>
+    <column xsi:type="int" name="group_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer Group ID"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="campaign_group_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="AMASTY_NTFCS_CAMPAIGN_GROUP_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID" table="amasty_notifications_campaign_group" column="group_id" referenceTable="customer_group" referenceColumn="customer_group_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="FK_E290615D36EA114278A225268CD21FF0" table="amasty_notifications_campaign_group" column="campaign_id" referenceTable="amasty_notifications_campaign" referenceColumn="campaign_id" onDelete="CASCADE"/>
+  </table>
+  <table name="amasty_notifications_campaign_segments" resource="default" engine="innodb" comment="Amasty Push Notifications Campaign Customer Segments Table">
+    <column xsi:type="int" name="campaign_segment_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+    <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Campaign ID"/>
+    <column xsi:type="int" name="segment_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer Segment ID"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="campaign_segment_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_D09C4BDFBE5C51BA6E50F5B801561508" table="amasty_notifications_campaign_segments" column="campaign_id" referenceTable="amasty_notifications_campaign" referenceColumn="campaign_id" onDelete="CASCADE"/>
+  </table>
+  <table name="amasty_notifications_campaign_subscriber_views" resource="default" engine="innodb" comment="Amasty Push Notifications Campaign Subscriber Shown table">
+    <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Campaign Id"/>
+    <column xsi:type="int" name="subscriber_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Subscriber Id"/>
+    <column xsi:type="smallint" name="shown" padding="5" unsigned="true" nullable="false" identity="false" comment="Shown"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="campaign_id"/>
+      <column name="subscriber_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_8708CCE55E965101CE8681DFECD9D3E4" table="amasty_notifications_campaign_subscriber_views" column="campaign_id" referenceTable="amasty_notifications_campaign" referenceColumn="campaign_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="FK_6C4730C4D9F52668B2DA62A826214CC7" table="amasty_notifications_campaign_subscriber_views" column="subscriber_id" referenceTable="amasty_notifications_subscriber" referenceColumn="subscriber_id" onDelete="CASCADE"/>
+  </table>
+  <table name="amasty_notifications_campaign_event" resource="default" engine="innodb" comment="Amasty Push Notifications Campaign Event Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Campaign ID"/>
+    <column xsi:type="varchar" name="event_type" nullable="false" length="64" comment="Campaign Event Type"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_A1BFF6842145635C785CA7EC10DB6A07" table="amasty_notifications_campaign_event" column="campaign_id" referenceTable="amasty_notifications_campaign" referenceColumn="campaign_id" onDelete="CASCADE"/>
+    <index referenceId="AMASTY_NOTIFICATIONS_CAMPAIGN_EVENT_EVENT_TYPE" indexType="btree">
+      <column name="event_type"/>
+    </index>
+  </table>
+</schema>

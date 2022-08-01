@@ -1,0 +1,113 @@
+{
+    "amasty_notifications_campaign": {
+        "column": {
+            "campaign_id": true,
+            "scheduled": true,
+            "store_id": true,
+            "name": true,
+            "is_active": true,
+            "status": true,
+            "logo_path": true,
+            "is_default_logo": true,
+            "message_title": true,
+            "message_body": true,
+            "button_notification_enable": true,
+            "button_notification_text": true,
+            "button_notification_url": true,
+            "utm_params": true,
+            "sent": true,
+            "shown": true,
+            "clicked": true,
+            "created_at": true,
+            "updated_at": true,
+            "segmentation_source": true,
+            "shown_unique": true,
+            "notification_type": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "amasty_notifications_subscriber": {
+        "column": {
+            "subscriber_id": true,
+            "source": true,
+            "is_active": true,
+            "subscriber_ip": true,
+            "token": true,
+            "location": true,
+            "customer_id": true,
+            "visitor_id": true,
+            "created_at": true,
+            "updated_at": true,
+            "store_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "amasty_notifications_campaign_store": {
+        "column": {
+            "id": true,
+            "campaign_id": true,
+            "store_id": true
+        },
+        "index": {
+            "AMASTY_NOTIFICATIONS_CAMPAIGN_STORE_CAMPAIGN_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_57B87DAD09737820DB07A466DE49306E": true,
+            "AMASTY_NOTIFICATIONS_CAMPAIGN_STORE_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "amasty_notifications_campaign_group": {
+        "column": {
+            "campaign_group_id": true,
+            "campaign_id": true,
+            "group_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AMASTY_NTFCS_CAMPAIGN_GROUP_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID": true,
+            "FK_E290615D36EA114278A225268CD21FF0": true
+        }
+    },
+    "amasty_notifications_campaign_segments": {
+        "column": {
+            "campaign_segment_id": true,
+            "campaign_id": true,
+            "segment_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_D09C4BDFBE5C51BA6E50F5B801561508": true
+        }
+    },
+    "amasty_notifications_campaign_subscriber_views": {
+        "column": {
+            "campaign_id": true,
+            "subscriber_id": true,
+            "shown": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_8708CCE55E965101CE8681DFECD9D3E4": true,
+            "FK_6C4730C4D9F52668B2DA62A826214CC7": true
+        }
+    },
+    "amasty_notifications_campaign_event": {
+        "column": {
+            "id": true,
+            "campaign_id": true,
+            "event_type": true
+        },
+        "index": {
+            "AMASTY_NOTIFICATIONS_CAMPAIGN_EVENT_EVENT_TYPE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_A1BFF6842145635C785CA7EC10DB6A07": true
+        }
+    }
+}
