@@ -1,0 +1,37 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="flavour" sortOrder="900">
+            <label>Flavour Warehouse</label>
+        </tab>
+        <section id="purchase_limit" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <tab>flavour</tab>
+            <label>Purchase Limit</label>
+            <resource>FlavourWarehouse_PurchaseLimit::purchase_limit</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                    <field id="is_active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Enable Purchase Limit</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="limitdata" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Purchase Limit</label>    
+                        <frontend_model>FlavourWarehouse\PurchaseLimit\Block\Form\GroupAttributes</frontend_model>
+                        <backend_model>FlavourWarehouse\PurchaseLimit\Model\Config\Serialized</backend_model>
+                    </field>
+                    <field id="notification" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Cart Error Message</label>
+                        <comment><![CDATA[Message will be displayed when order amount is greater than purchase limit. Use %1 to substitute limit value!]]></comment>
+                    </field>
+                    <field id="redirect_url" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Redirect URL</label>
+                        <comment><![CDATA[You will be redirected to this page when checkout button is clicked!]]></comment>
+                    </field>
+                    <field id="reset" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <frontend_model>FlavourWarehouse\PurchaseLimit\Block\System\Config\Reset</frontend_model>
+                        <label>Hard Reset (For all customers)</label>
+                        <comment><![CDATA[Purchase Limit for all customers will be reset once the button is clicked!]]></comment>
+                    </field>
+            </group>
+        </section>
+    </system>
+</config>

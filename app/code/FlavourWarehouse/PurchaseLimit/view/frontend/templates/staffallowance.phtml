@@ -1,0 +1,17 @@
+<?php
+$attr_details = $block->CustomCustomerAttributes();
+?>
+<table class="table table-bordered" style="white-space: nowrap;width: 100%;">
+  <thead>
+    <tr>
+    <th scope="col" style="padding: 5px;">Purchase Limit</th>
+    <th scope="col" style="padding: 5px;">Balance</th>
+    <th scope="col" style="padding: 5px;">Reset Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <td scope="row" style="padding: 5px;"> <?= $attr_details['purchase_limit']; ?></td>
+    <td scope="row" style="padding: 5px;"> <?= $attr_details['balance_limit']; ?></td>
+    <td scope="row" style="padding: 5px;"> <?= $attr_details['reset_date']; ?></td>
+  </tbody>
+</table>
